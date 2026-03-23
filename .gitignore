@@ -1,0 +1,28 @@
+# Dependencias
+node_modules/
+
+# Build
+dist/
+
+# Variables de entorno
+.env
+.env.production
+
+# Astro
+.astro/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Archivos temporales del proyecto
+web-ejemplo/
+image.png
+tres pantallas.png
+pendientes.md
+.claude/

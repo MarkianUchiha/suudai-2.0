@@ -1,0 +1,132 @@
+---
+// Footer — copyright dinámico, links rápidos, acceso sistema
+const year = new Date().getFullYear();
+const links = [
+	{ label: 'Inicio', href: '#inicio' },
+	{ label: 'Nosotros', href: '#nosotros' },
+	{ label: 'Productos', href: '#productos' },
+	{ label: 'Contacto', href: '#contacto' },
+];
+---
+
+<footer class="footer">
+	<div class="footer__container container">
+		<div class="footer__brand">
+			<span class="footer__logo">SUUDAI</span>
+			<p class="footer__tagline">Agua purificada a domicilio en Durango</p>
+		</div>
+
+		<nav class="footer__nav" aria-label="Footer">
+			{links.map((link) => (
+				<a href={link.href} class="footer__link">{link.label}</a>
+			))}
+		</nav>
+
+		<div class="footer__bottom">
+			<p class="footer__copy">&copy; {year} Suudai. Designed by <a href="https://markidev.com" target="_blank" rel="noopener noreferrer" class="footer__credit">MarkiDev</a></p>
+			<a href="https://sistema.suudai.com" target="_blank" rel="noopener noreferrer" class="footer__system">
+				Acceso sistema →
+			</a>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		padding-block: var(--space-xl) var(--space-lg);
+		background-color: var(--color-primary-dark);
+		color: rgba(255, 255, 255, 0.7);
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.footer__container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-lg);
+		text-align: center;
+	}
+
+	/* --- Marca --- */
+	.footer__logo {
+		font-family: var(--font-heading);
+		font-weight: var(--font-bold);
+		font-size: var(--text-xl);
+		color: var(--color-white);
+		letter-spacing: 2px;
+	}
+
+	.footer__tagline {
+		font-size: var(--text-sm);
+		margin-bottom: 0;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	/* --- Nav --- */
+	.footer__nav {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: var(--space-md) var(--space-lg);
+	}
+
+	.footer__link {
+		font-size: var(--text-sm);
+		color: rgba(255, 255, 255, 0.7);
+		transition: color var(--transition-fast);
+	}
+
+	.footer__link:hover {
+		color: var(--color-secondary);
+	}
+
+	/* --- Bottom --- */
+	.footer__bottom {
+		width: 100%;
+		padding-top: var(--space-lg);
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-sm);
+	}
+
+	.footer__copy {
+		font-size: var(--text-xs);
+		margin-bottom: 0;
+		color: rgba(255, 255, 255, 0.4);
+	}
+
+	.footer__system {
+		font-size: var(--text-xs);
+		color: rgba(255, 255, 255, 0.3);
+		transition: color var(--transition-fast);
+	}
+
+	.footer__system:hover {
+		color: var(--color-secondary);
+	}
+
+	.footer__credit {
+		color: var(--color-secondary);
+		transition: color var(--transition-fast);
+	}
+
+	.footer__credit:hover {
+		color: var(--color-white);
+	}
+
+	/* --- Desktop --- */
+	@media (min-width: 768px) {
+		.footer__container {
+			flex-direction: row;
+			justify-content: space-between;
+			text-align: left;
+		}
+
+		.footer__bottom {
+			flex-direction: row;
+			justify-content: space-between;
+		}
+	}
+</style>

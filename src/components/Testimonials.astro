@@ -1,0 +1,147 @@
+---
+// Sección de testimonios — 2 cards con comillas decorativas
+const testimonials = [
+	{
+		name: 'Roberto Sánchez',
+		role: 'Cliente desde 2021',
+		text: 'Llevo años pidiendo con Suudai y nunca me han fallado. El agua llega siempre al día siguiente y el sabor es excelente. Los recomiendo al 100%.',
+		avatar: '/images/avatar_1.png',
+	},
+	{
+		name: 'María González',
+		role: 'Cliente desde 2023',
+		text: 'Lo que más me gusta es lo fácil que es pedir por WhatsApp. En menos de un minuto ya tengo mi pedido listo y al otro día lo recibo en mi casa.',
+		avatar: '/images/avatar_2.png',
+	},
+];
+---
+
+<section class="testimonials" id="testimonios">
+	<div class="testimonials__container container">
+		<h2 class="testimonials__heading section-heading">¿Qué Dicen Nuestros Clientes?</h2>
+		<p class="section-subtitle">La confianza de miles de familias en Durango nos respalda</p>
+
+		<div class="testimonials__grid">
+			{testimonials.map((t) => (
+				<div class="testimonials__card">
+					<div class="testimonials__quote" aria-hidden="true">"</div>
+					<p class="testimonials__text">{t.text}</p>
+					<div class="testimonials__author">
+						<img
+							src={t.avatar}
+							alt={t.name}
+							class="testimonials__avatar"
+							width="56"
+							height="56"
+							loading="lazy"
+						/>
+						<div>
+							<span class="testimonials__name">{t.name}</span>
+							<span class="testimonials__role">{t.role}</span>
+						</div>
+					</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.testimonials {
+		padding-block: var(--space-3xl);
+		background-color: var(--color-bg-light);
+	}
+
+	.testimonials__container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	/* --- Grid --- */
+	.testimonials__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-xl);
+		width: 100%;
+		max-width: 800px;
+	}
+
+	/* --- Card --- */
+	.testimonials__card {
+		position: relative;
+		background-color: var(--color-white);
+		border-radius: var(--radius-lg);
+		padding: var(--space-xl);
+		padding-top: var(--space-2xl);
+		box-shadow: var(--shadow-sm);
+		transition: box-shadow var(--transition-base), transform var(--transition-base);
+	}
+
+	.testimonials__card:hover {
+		box-shadow: var(--shadow-md);
+		transform: translateY(-4px);
+	}
+
+	/* --- Comillas decorativas --- */
+	.testimonials__quote {
+		position: absolute;
+		top: -8px;
+		left: var(--space-lg);
+		font-family: var(--font-heading);
+		font-size: 5rem;
+		line-height: 1;
+		color: var(--color-secondary);
+		opacity: 0.3;
+		user-select: none;
+	}
+
+	/* --- Texto --- */
+	.testimonials__text {
+		font-size: var(--text-base);
+		color: var(--color-text-light);
+		line-height: 1.7;
+		margin-bottom: var(--space-lg);
+		font-style: italic;
+	}
+
+	/* --- Autor --- */
+	.testimonials__author {
+		display: flex;
+		align-items: center;
+		gap: var(--space-md);
+	}
+
+	.testimonials__avatar {
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 3px solid var(--color-secondary);
+	}
+
+	.testimonials__name {
+		display: block;
+		font-family: var(--font-heading);
+		font-weight: var(--font-bold);
+		color: var(--color-primary-dark);
+		font-size: var(--text-base);
+	}
+
+	.testimonials__role {
+		display: block;
+		font-size: var(--text-sm);
+		color: var(--color-text-light);
+	}
+
+	/* --- Tablet/Desktop: 2 columnas --- */
+	@media (min-width: 768px) {
+		.testimonials {
+			padding-block: var(--space-4xl);
+		}
+
+		.testimonials__grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>

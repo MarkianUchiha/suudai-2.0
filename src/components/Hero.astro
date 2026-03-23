@@ -1,0 +1,299 @@
+---
+// Hero section — estilo Watera
+// Splash responsive: 100% auto en mobile, cover en desktop
+// Curva divisora estática visible
+---
+
+<section class="hero" id="inicio">
+	<div class="hero__container container">
+		<div class="hero__content">
+			<h1 class="hero__title">
+				Agua Altamente
+				<span class="hero__title--highlight">Purificada</span>
+				Hasta tu Hogar
+			</h1>
+			<p class="hero__subtitle">Agua 100%, sin minerales, ni cloro.</p>
+			<a href="#productos" class="btn btn-primary hero__cta">
+				Haz tu Pedido
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M5 12h14M12 5l7 7-7 7"/>
+				</svg>
+			</a>
+		</div>
+
+		<div class="hero__image">
+			<img
+				src="/images/garrafon-hero.png"
+				alt="Garrafón de agua purificada Suudai"
+				class="hero__product"
+				width="400"
+				height="500"
+				loading="eager"
+			/>
+		</div>
+	</div>
+
+	<!--
+		Olas animadas — 3 capas.
+		viewBox 2880 = patrón duplicado dentro del SVG (0-1440 = 1440-2880).
+		width: 100%, translateX(-50%) desplaza exactamente 1 patrón.
+		Como las 2 mitades son idénticas, el loop es invisible.
+	-->
+	<div class="hero__waves" aria-hidden="true">
+		<!-- Ola 1 (trasera) — azul sutil, lenta -->
+		<svg class="hero__wave hero__wave--1" viewBox="0 0 2880 120" preserveAspectRatio="none">
+			<path d="M0,60 C120,30 240,30 360,60 C480,90 600,90 720,60 C840,30 960,30 1080,60 C1200,90 1320,90 1440,60 C1560,30 1680,30 1800,60 C1920,90 2040,90 2160,60 C2280,30 2400,30 2520,60 C2640,90 2760,90 2880,60 L2880,120 L0,120 Z" fill="rgba(15,188,249,0.15)"/>
+		</svg>
+		<!-- Ola 2 (media) — verde aqua, velocidad media, fase invertida -->
+		<svg class="hero__wave hero__wave--2" viewBox="0 0 2880 120" preserveAspectRatio="none">
+			<path d="M0,50 C120,80 240,80 360,50 C480,20 600,20 720,50 C840,80 960,80 1080,50 C1200,20 1320,20 1440,50 C1560,80 1680,80 1800,50 C1920,20 2040,20 2160,50 C2280,80 2400,80 2520,50 C2640,20 2760,20 2880,50 L2880,120 L0,120 Z" fill="rgba(18,203,196,0.1)"/>
+		</svg>
+		<!-- Ola 3 (frontal) — blanca, rápida -->
+		<svg class="hero__wave hero__wave--3" viewBox="0 0 2880 120" preserveAspectRatio="none">
+			<path d="M0,55 C160,25 320,25 480,55 C640,85 800,85 960,55 C1120,25 1280,25 1440,55 C1600,25 1760,25 1920,55 C2080,85 2240,85 2400,55 C2560,25 2720,25 2880,55 L2880,120 L0,120 Z" fill="#FFFFFF"/>
+		</svg>
+	</div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		min-height: 100vh;
+		min-height: 100svh;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+		padding-top: 4rem;
+		/* Color base que combina con el splash */
+		background-color: #E8F4FD;
+	}
+
+	/*
+		Splash como pseudo-elemento.
+		Mobile: 100% de ancho, alto natural (no se deforma).
+		La imagen queda arriba y el gradiente la funde abajo.
+	*/
+	.hero::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url('/images/wave-splash-water.png');
+		background-repeat: no-repeat;
+		background-position: top center;
+		/* Mobile: ancho completo, alto proporcional (no se deforma) */
+		background-size: 100% auto;
+		z-index: 0;
+	}
+
+	/* Gradiente que funde el splash hacia blanco */
+	.hero::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(
+			to bottom,
+			transparent 0%,
+			transparent 25%,
+			rgba(232, 244, 253, 0.4) 45%,
+			rgba(255, 255, 255, 0.8) 65%,
+			#FFFFFF 85%
+		);
+		z-index: 1;
+	}
+
+	/* --- Contenido --- */
+	.hero__container {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-lg);
+		padding-block: var(--space-2xl) 6rem;
+	}
+
+	.hero__content {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-md);
+	}
+
+	.hero__title {
+		font-size: var(--text-4xl);
+		color: var(--color-primary-dark);
+		max-width: 500px;
+		line-height: 1.15;
+		text-shadow:
+			0 2px 12px rgba(255, 255, 255, 0.95),
+			0 0 40px rgba(255, 255, 255, 0.8);
+	}
+
+	.hero__title--highlight {
+		color: var(--color-primary);
+		text-shadow:
+			-1px -1px 0 rgba(0,0,0,0.4),
+			1px -1px 0 rgba(0,0,0,0.4),
+			-1px 1px 0 rgba(0,0,0,0.4),
+			1px 1px 0 rgba(0,0,0,0.4);
+	}
+
+	.hero__subtitle {
+		font-size: var(--text-lg);
+		color: var(--color-text-light);
+		margin-bottom: 0;
+		text-shadow: 0 1px 8px rgba(255, 255, 255, 0.95);
+	}
+
+	.hero__cta {
+		font-size: var(--text-lg);
+		padding: 1rem 2.5rem;
+		border-radius: var(--radius-full);
+		box-shadow: var(--shadow-md);
+		margin-top: var(--space-sm);
+	}
+
+	.hero__cta:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-lg);
+	}
+
+	/* --- Garrafón --- */
+	.hero__image {
+		animation: heroFadeIn 0.6s ease-out both;
+	}
+
+	.hero__product {
+		height: 35vh;
+		min-height: 220px;
+		max-height: 350px;
+		width: auto;
+		object-fit: contain;
+		filter: drop-shadow(0 10px 30px rgba(15, 188, 249, 0.25));
+	}
+
+	@keyframes heroFadeIn {
+		from { opacity: 0; transform: translateY(20px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	/* --- Olas animadas ---
+		El contenedor (.hero__waves) tiene width: 200% del hero.
+		Cada SVG tiene viewBox 2880 = 2 copias del patrón (0-1440 y 1440-2880).
+		El SVG llena el contenedor de 200%, mostrando la primera mitad.
+		translateX(-50%) mueve al segundo patrón (idéntico) → loop sin costuras.
+	*/
+	.hero__waves {
+		position: absolute;
+		bottom: -1px;
+		left: 0;
+		width: 200%;
+		height: 50px;
+		z-index: 3;
+	}
+
+	.hero__wave {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		will-change: transform;
+	}
+
+	.hero__wave--1 {
+		z-index: 3;
+		animation: waveSlide 10s linear infinite;
+	}
+
+	.hero__wave--2 {
+		z-index: 2;
+		animation: waveSlide 7s linear infinite reverse;
+	}
+
+	.hero__wave--3 {
+		z-index: 1;
+		animation: waveSlide 5s linear infinite;
+	}
+
+	@keyframes waveSlide {
+		0% { transform: translateX(0); }
+		100% { transform: translateX(-50%); }
+	}
+
+	/* --- Tablet (768px) --- */
+	@media (min-width: 768px) {
+		.hero__container {
+			gap: var(--space-xl);
+			padding-block: var(--space-3xl) 7rem;
+		}
+
+		.hero__product {
+			max-height: 400px;
+			height: 38vh;
+		}
+
+		.hero__waves {
+			height: 80px;
+		}
+	}
+
+	/* --- Desktop (1024px) --- */
+	@media (min-width: 1024px) {
+		/* Desktop: cover para llenar todo el hero */
+		.hero::before {
+			background-size: cover;
+		}
+
+		.hero__container {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			padding-block: var(--space-4xl) 7rem;
+		}
+
+		.hero__content {
+			text-align: left;
+			align-items: flex-start;
+			flex: 1;
+			max-width: 500px;
+		}
+
+		.hero__title {
+			font-size: var(--text-5xl);
+		}
+
+		.hero__subtitle {
+			font-size: var(--text-xl);
+		}
+
+		.hero__image {
+			flex: 0 0 auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.hero__product {
+			max-height: 480px;
+			height: 48vh;
+		}
+
+		.hero__waves {
+			height: 110px;
+		}
+	}
+
+	/* --- Accesibilidad --- */
+	@media (prefers-reduced-motion: reduce) {
+		.hero__image { animation: none; }
+		.hero__wave { animation: none; }
+	}
+</style>

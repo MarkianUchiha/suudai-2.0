@@ -1,0 +1,263 @@
+---
+// Sección Sobre Nosotros — estilo Watera
+// Garrafón central con splash circular rotando
+// Badges de estadísticas posicionados alrededor
+// Texto descriptivo + CTA
+---
+
+<section class="about" id="nosotros">
+	<div class="about__container container">
+		<!-- Columna izquierda: garrafón + splash rotando + badges -->
+		<div class="about__visual">
+			<!-- Anillo de agua girando 360° -->
+			<img
+				src="/images/Water_Circle.png"
+				alt=""
+				class="about__splash-ring"
+				aria-hidden="true"
+				loading="lazy"
+			/>
+
+			<!-- Garrafón estático al centro -->
+			<img
+				src="/images/garrafon-hero.png"
+				alt="Garrafón de agua purificada Suudai"
+				class="about__garrafon"
+				width="280"
+				height="350"
+				loading="lazy"
+			/>
+
+			<!-- Badges de estadísticas -->
+			<div class="about__badge about__badge--top">
+				<span class="about__badge-number">5+</span>
+				<span class="about__badge-label">Años de<br>Experiencia</span>
+			</div>
+			<div class="about__badge about__badge--bottom">
+				<span class="about__badge-number">20k+</span>
+				<span class="about__badge-label">Clientes<br>Satisfechos</span>
+			</div>
+			<div class="about__badge about__badge--right">
+				<span class="about__badge-number">1,000+</span>
+				<span class="about__badge-label">Garrafones<br>por Semana</span>
+			</div>
+		</div>
+
+		<!-- Columna derecha: texto -->
+		<div class="about__content">
+			<h2 class="about__title">Agua pura, directo a tu puerta</h2>
+			<p class="about__text">
+				En Suudai llevamos más de 5 años llevando agua purificada de la más alta
+				calidad a los hogares y negocios de Durango. Nuestro proceso de purificación
+				garantiza agua libre de impurezas, con el mejor sabor y al mejor precio.
+			</p>
+			<p class="about__text">
+				Más de 20,000 familias ya confían en nosotros para su consumo diario.
+				Pedimos antes de las 4PM y entregamos al día siguiente, sin falta.
+			</p>
+			<a href="#productos" class="btn btn-outline about__cta">
+				Conócenos
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M5 12h14M12 5l7 7-7 7"/>
+				</svg>
+			</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.about {
+		padding-block: var(--space-3xl);
+		background-color: var(--color-bg);
+		overflow: hidden;
+	}
+
+	.about__container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-2xl);
+	}
+
+	/* --- Visual: garrafón + splash + badges --- */
+	.about__visual {
+		position: relative;
+		width: 300px;
+		height: 300px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	/* Anillo de agua rotando */
+	.about__splash-ring {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		animation: splashRotate 20s linear infinite;
+	}
+
+	@keyframes splashRotate {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+
+	/* Garrafón centrado, estático (no rota) */
+	.about__garrafon {
+		position: relative;
+		z-index: 2;
+		height: 220px;
+		width: auto;
+		object-fit: contain;
+		filter: drop-shadow(0 8px 24px rgba(15, 188, 249, 0.2));
+	}
+
+	/* --- Badges --- */
+	.about__badge {
+		position: absolute;
+		z-index: 3;
+		background-color: var(--color-primary-dark);
+		color: var(--color-white);
+		border-radius: var(--radius-lg);
+		padding: 0.6rem 1rem;
+		text-align: center;
+		box-shadow: var(--shadow-md);
+		/* Evita que roten con el splash */
+	}
+
+	.about__badge-number {
+		display: block;
+		font-family: var(--font-heading);
+		font-weight: var(--font-bold);
+		font-size: var(--text-xl);
+		line-height: 1.1;
+		color: var(--color-secondary);
+	}
+
+	.about__badge-label {
+		font-size: var(--text-xs);
+		line-height: 1.2;
+		opacity: 0.9;
+	}
+
+	/* Posición de cada badge — tocan levemente el borde del círculo */
+	.about__badge--top {
+		top: 5px;
+		left: -15px;
+	}
+
+	.about__badge--bottom {
+		bottom: 5px;
+		right: -15px;
+	}
+
+	.about__badge--right {
+		top: 50%;
+		right: -25px;
+		transform: translateY(-50%);
+	}
+
+	/* --- Contenido texto --- */
+	.about__content {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-md);
+	}
+
+	.about__title {
+		font-size: var(--text-3xl);
+		color: var(--color-primary-dark);
+		max-width: 500px;
+	}
+
+	.about__text {
+		max-width: 520px;
+		color: var(--color-text-light);
+		line-height: 1.7;
+	}
+
+	.about__cta {
+		margin-top: var(--space-sm);
+	}
+
+	/* --- Tablet (768px) --- */
+	@media (min-width: 768px) {
+		.about {
+			padding-block: var(--space-4xl);
+		}
+
+		.about__visual {
+			width: 380px;
+			height: 380px;
+		}
+
+		.about__garrafon {
+			height: 260px;
+		}
+
+		.about__badge--top {
+			top: 5px;
+			left: -20px;
+		}
+
+		.about__badge--bottom {
+			bottom: 5px;
+			right: -20px;
+		}
+
+		.about__badge--right {
+			right: -30px;
+		}
+	}
+
+	/* --- Desktop (1024px) --- */
+	@media (min-width: 1024px) {
+		.about__container {
+			flex-direction: row;
+			justify-content: space-between;
+			gap: var(--space-4xl);
+		}
+
+		.about__visual {
+			width: 420px;
+			height: 420px;
+			flex-shrink: 0;
+		}
+
+		.about__garrafon {
+			height: 300px;
+		}
+
+		.about__content {
+			text-align: left;
+			align-items: flex-start;
+		}
+
+		.about__title {
+			font-size: var(--text-4xl);
+		}
+
+		.about__badge--top {
+			top: 10px;
+			left: -20px;
+		}
+
+		.about__badge--bottom {
+			bottom: 10px;
+			right: -20px;
+		}
+
+		.about__badge--right {
+			right: -35px;
+		}
+	}
+
+	/* --- Accesibilidad --- */
+	@media (prefers-reduced-motion: reduce) {
+		.about__splash-ring { animation: none; }
+	}
+</style>

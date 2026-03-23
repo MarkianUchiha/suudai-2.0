@@ -1,0 +1,561 @@
+---
+// Modal de pedido — formulario + resumen de productos
+// Se abre desde el botón "Continuar con mi pedido" en Products
+---
+
+<div class="modal" id="orderModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+	<div class="modal__backdrop" data-close-modal></div>
+	<div class="modal__content">
+		<!-- Botón cerrar -->
+		<button class="modal__close" data-close-modal aria-label="Cerrar">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M18 6L6 18M6 6l12 12"/>
+			</svg>
+		</button>
+
+		<h2 class="modal__title" id="modalTitle">Tu Pedido</h2>
+
+		<!-- Resumen de productos seleccionados -->
+		<div class="modal__summary" id="orderSummary">
+			<!-- Se llena dinámicamente con JS -->
+		</div>
+
+		<!-- Formulario -->
+		<form class="modal__form" id="orderForm" novalidate>
+			<div class="modal__field">
+				<label for="clientName" class="modal__label">Nombre</label>
+				<input
+					type="text"
+					id="clientName"
+					name="name"
+					class="modal__input"
+					placeholder="Tu nombre completo"
+					required
+					autocomplete="name"
+				/>
+				<span class="modal__error" data-error="name"></span>
+			</div>
+
+			<div class="modal__field">
+				<label for="clientPhone" class="modal__label">Teléfono</label>
+				<input
+					type="tel"
+					id="clientPhone"
+					name="phone"
+					class="modal__input"
+					placeholder="618 123 4567"
+					required
+					autocomplete="tel"
+					pattern="[0-9]{10}"
+					maxlength="10"
+				/>
+				<span class="modal__error" data-error="phone"></span>
+			</div>
+
+			<div class="modal__field">
+				<label for="clientAddress" class="modal__label">Dirección de entrega</label>
+				<textarea
+					id="clientAddress"
+					name="address"
+					class="modal__input modal__textarea"
+					placeholder="Calle, número, colonia"
+					required
+					rows="3"
+					autocomplete="street-address"
+				></textarea>
+				<span class="modal__error" data-error="address"></span>
+			</div>
+
+			<!-- Fecha estimada de entrega -->
+			<div class="modal__delivery" id="deliveryDate">
+				<!-- Se llena con JS (ticket SUUDAI-202) -->
+			</div>
+
+			<button type="submit" class="btn btn-primary modal__submit" id="submitOrder">
+				Enviar Pedido por WhatsApp
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+				</svg>
+			</button>
+		</form>
+
+		<!-- Vista de confirmación (oculta por defecto) -->
+		<div class="modal__confirmation" id="orderConfirmation" hidden>
+			<div class="modal__confirm-icon" aria-hidden="true">
+				<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"/>
+					<path d="M9 12l2 2 4-4"/>
+				</svg>
+			</div>
+			<h3 class="modal__confirm-title">Pedido enviado</h3>
+			<p class="modal__confirm-text">Tu pedido fue enviado por WhatsApp. Te confirmaremos la entrega.</p>
+
+			<div class="modal__confirm-summary" id="confirmSummary">
+				<!-- Se llena con JS -->
+			</div>
+
+			<p class="modal__confirm-note">Cobro a la entrega</p>
+			<p class="modal__confirm-fallback">¿Problemas? Llámanos al <a href="tel:+526181063930">618 106 3930</a></p>
+
+			<button type="button" class="btn btn-primary modal__confirm-btn" id="newOrderBtn">
+				Hacer otro pedido
+			</button>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* --- Modal overlay --- */
+	.modal {
+		position: fixed;
+		inset: 0;
+		z-index: 100;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-md);
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity var(--transition-base), visibility var(--transition-base);
+	}
+
+	.modal.is-open {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	/* Fondo oscuro */
+	.modal__backdrop {
+		position: absolute;
+		inset: 0;
+		background-color: rgba(27, 20, 100, 0.6);
+		cursor: pointer;
+	}
+
+	/* Contenido del modal */
+	.modal__content {
+		position: relative;
+		background-color: var(--color-white);
+		border-radius: var(--radius-lg);
+		padding: var(--space-xl);
+		width: 100%;
+		max-width: 500px;
+		max-height: 90vh;
+		overflow-y: auto;
+		box-shadow: var(--shadow-lg);
+		transform: translateY(20px);
+		transition: transform var(--transition-base);
+	}
+
+	.modal.is-open .modal__content {
+		transform: translateY(0);
+	}
+
+	/* Botón cerrar */
+	.modal__close {
+		position: absolute;
+		top: var(--space-md);
+		right: var(--space-md);
+		width: 36px;
+		height: 36px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		color: var(--color-text-light);
+		transition: background-color var(--transition-fast), color var(--transition-fast);
+	}
+
+	.modal__close:hover {
+		background-color: var(--color-bg-light);
+		color: var(--color-text);
+	}
+
+	/* Título */
+	.modal__title {
+		font-size: var(--text-2xl);
+		color: var(--color-primary-dark);
+		margin-bottom: var(--space-lg);
+	}
+
+	/* --- Resumen de productos --- */
+	.modal__summary {
+		background-color: var(--color-bg-light);
+		border-radius: var(--radius-md);
+		padding: var(--space-md);
+		margin-bottom: var(--space-lg);
+	}
+
+	/* Estilos para el resumen generado por JS */
+	.modal__summary :global(.summary-item) {
+		display: flex;
+		justify-content: space-between;
+		padding: var(--space-xs) 0;
+		font-size: var(--text-sm);
+		color: var(--color-text);
+	}
+
+	.modal__summary :global(.summary-total) {
+		display: flex;
+		justify-content: space-between;
+		padding-top: var(--space-sm);
+		margin-top: var(--space-sm);
+		border-top: 2px solid var(--color-border);
+		font-family: var(--font-heading);
+		font-weight: var(--font-bold);
+		font-size: var(--text-lg);
+		color: var(--color-primary-dark);
+	}
+
+	/* --- Formulario --- */
+	.modal__field {
+		margin-bottom: var(--space-md);
+	}
+
+	.modal__label {
+		display: block;
+		font-size: var(--text-sm);
+		font-weight: var(--font-semibold);
+		color: var(--color-primary-dark);
+		margin-bottom: var(--space-xs);
+	}
+
+	.modal__input {
+		width: 100%;
+		padding: 0.75rem 1rem;
+		border: 2px solid var(--color-border);
+		border-radius: var(--radius-md);
+		font-size: var(--text-base);
+		transition: border-color var(--transition-fast);
+		background-color: var(--color-white);
+	}
+
+	.modal__input:focus {
+		outline: none;
+		border-color: var(--color-primary);
+	}
+
+	.modal__input.is-invalid {
+		border-color: #e74c3c;
+	}
+
+	.modal__textarea {
+		resize: vertical;
+		min-height: 80px;
+	}
+
+	.modal__error {
+		display: block;
+		font-size: var(--text-xs);
+		color: #e74c3c;
+		margin-top: 4px;
+		min-height: 1em;
+	}
+
+	/* --- Fecha de entrega --- */
+	.modal__delivery {
+		background-color: rgba(18, 203, 196, 0.1);
+		border-radius: var(--radius-md);
+		padding: var(--space-md);
+		margin-bottom: var(--space-lg);
+		text-align: center;
+		font-weight: var(--font-semibold);
+		color: var(--color-primary-dark);
+	}
+
+	/* --- Botón enviar --- */
+	.modal__submit {
+		width: 100%;
+		font-size: var(--text-lg);
+		padding: 1rem;
+		border-radius: var(--radius-full);
+		background-color: #25D366;
+		gap: var(--space-sm);
+	}
+
+	.modal__submit:hover {
+		background-color: #20bd5a;
+	}
+
+	/* --- Confirmación --- */
+	.modal__confirmation {
+		text-align: center;
+	}
+
+	.modal__confirmation[hidden] {
+		display: none;
+	}
+
+	.modal__confirm-icon {
+		color: var(--color-secondary);
+		margin-bottom: var(--space-md);
+	}
+
+	.modal__confirm-title {
+		font-size: var(--text-2xl);
+		color: var(--color-primary-dark);
+		margin-bottom: var(--space-sm);
+	}
+
+	.modal__confirm-text {
+		color: var(--color-text-light);
+		margin-bottom: var(--space-lg);
+	}
+
+	.modal__confirm-summary {
+		background-color: var(--color-bg-light);
+		border-radius: var(--radius-md);
+		padding: var(--space-md);
+		margin-bottom: var(--space-lg);
+		text-align: left;
+	}
+
+	.modal__confirm-summary :global(.summary-item) {
+		display: flex;
+		justify-content: space-between;
+		padding: var(--space-xs) 0;
+		font-size: var(--text-sm);
+		color: var(--color-text);
+	}
+
+	.modal__confirm-summary :global(.summary-total) {
+		display: flex;
+		justify-content: space-between;
+		padding-top: var(--space-sm);
+		margin-top: var(--space-sm);
+		border-top: 2px solid var(--color-border);
+		font-family: var(--font-heading);
+		font-weight: var(--font-bold);
+		color: var(--color-primary-dark);
+	}
+
+	.modal__confirm-summary :global(.summary-delivery) {
+		padding-top: var(--space-sm);
+		font-size: var(--text-sm);
+		color: var(--color-secondary);
+		font-weight: var(--font-semibold);
+	}
+
+	.modal__confirm-note {
+		font-weight: var(--font-semibold);
+		color: var(--color-primary-dark);
+		margin-bottom: var(--space-xs);
+	}
+
+	.modal__confirm-fallback {
+		font-size: var(--text-sm);
+		color: var(--color-text-light);
+		margin-bottom: var(--space-lg);
+	}
+
+	.modal__confirm-fallback a {
+		color: var(--color-primary);
+		font-weight: var(--font-semibold);
+	}
+
+	.modal__confirm-btn {
+		width: 100%;
+		border-radius: var(--radius-full);
+	}
+
+	/* Bloquear scroll del body cuando el modal está abierto */
+	:global(body.modal-open) {
+		overflow: hidden;
+	}
+</style>
+
+<script>
+	import { getDeliveryDate, formatDeliveryDate } from '../scripts/delivery-date.js';
+
+	// --- Modal: abrir/cerrar ---
+	const modal = document.getElementById('orderModal') as HTMLElement;
+	const checkoutBtn = document.getElementById('checkoutBtn') as HTMLElement;
+	const closeBtns = modal.querySelectorAll('[data-close-modal]');
+	const summaryEl = document.getElementById('orderSummary') as HTMLElement;
+	const deliveryEl = document.getElementById('deliveryDate') as HTMLElement;
+
+	// Abrir modal
+	function openModal() {
+		// Generar resumen de productos seleccionados
+		buildSummary();
+		// Calcular y mostrar fecha de entrega
+		const deliveryDate = getDeliveryDate();
+		const formatted = formatDeliveryDate(deliveryDate);
+		deliveryEl.innerHTML = `Entrega estimada: <strong>${formatted}</strong>`;
+		modal.classList.add('is-open');
+		modal.setAttribute('aria-hidden', 'false');
+		document.body.classList.add('modal-open');
+	}
+
+	// Cerrar modal
+	function closeModal() {
+		modal.classList.remove('is-open');
+		modal.setAttribute('aria-hidden', 'true');
+		document.body.classList.remove('modal-open');
+	}
+
+	// Evento: botón "Continuar con mi pedido"
+	checkoutBtn.addEventListener('click', openModal);
+
+	// Evento: cerrar con X o backdrop
+	closeBtns.forEach(btn => btn.addEventListener('click', closeModal));
+
+	// Evento: cerrar con Escape
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+			closeModal();
+		}
+	});
+
+	// --- Resumen de productos ---
+	function buildSummary() {
+		const cards = document.querySelectorAll('.product-card');
+		let html = '';
+		let total = 0;
+
+		cards.forEach(card => {
+			const qty = Number((card.querySelector('[data-qty]') as HTMLElement).textContent);
+			if (qty > 0) {
+				const name = (card.querySelector('.product-card__name') as HTMLElement).textContent;
+				const price = Number((card as HTMLElement).dataset.price);
+				const subtotal = qty * price;
+				total += subtotal;
+				html += `<div class="summary-item"><span>${qty}x ${name}</span><span>$${subtotal} MXN</span></div>`;
+			}
+		});
+
+		html += `<div class="summary-total"><span>Total</span><span>$${total} MXN</span></div>`;
+		summaryEl.innerHTML = html;
+	}
+
+	// --- Validación del formulario ---
+	const form = document.getElementById('orderForm') as HTMLFormElement;
+
+	form.addEventListener('submit', (e) => {
+		e.preventDefault();
+
+		const name = (document.getElementById('clientName') as HTMLInputElement).value.trim();
+		const phone = (document.getElementById('clientPhone') as HTMLInputElement).value.trim();
+		const address = (document.getElementById('clientAddress') as HTMLTextAreaElement).value.trim();
+
+		let isValid = true;
+
+		// Validar nombre
+		if (!name) {
+			showError('name', 'Ingresa tu nombre');
+			isValid = false;
+		} else {
+			clearError('name');
+		}
+
+		// Validar teléfono (10 dígitos)
+		if (!phone || !/^\d{10}$/.test(phone)) {
+			showError('phone', 'Ingresa un teléfono de 10 dígitos');
+			isValid = false;
+		} else {
+			clearError('phone');
+		}
+
+		// Validar dirección
+		if (!address) {
+			showError('address', 'Ingresa tu dirección de entrega');
+			isValid = false;
+		} else {
+			clearError('address');
+		}
+
+		if (!isValid) return;
+
+		// Construir mensaje de WhatsApp (ticket SUUDAI-204)
+		const cards = document.querySelectorAll('.product-card');
+		let message = `*Nuevo Pedido - Suudai*\n\n`;
+		message += `*Nombre:* ${name}\n`;
+		message += `*Telefono:* ${phone}\n`;
+		message += `*Direccion:* ${address}\n\n`;
+		message += `*Productos:*\n`;
+
+		let total = 0;
+		cards.forEach(card => {
+			const qty = Number((card.querySelector('[data-qty]') as HTMLElement).textContent);
+			if (qty > 0) {
+				const productName = (card.querySelector('.product-card__name') as HTMLElement).textContent;
+				const price = Number((card as HTMLElement).dataset.price);
+				const subtotal = qty * price;
+				total += subtotal;
+				message += `- ${qty}x ${productName} — $${subtotal} MXN\n`;
+			}
+		});
+
+		const deliveryDate = getDeliveryDate();
+		const formatted = formatDeliveryDate(deliveryDate);
+
+		message += `\n*Total: $${total} MXN*\n`;
+		message += `*Entrega estimada:* ${formatted}\n`;
+		message += `*Pago:* Cobro a la entrega`;
+
+		// Abrir WhatsApp con mensaje
+		const waNumber = '526181063930';
+		const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+		window.open(waUrl, '_blank');
+
+		// Mostrar vista de confirmación
+		showConfirmation(formatted);
+	});
+
+	// Mostrar/limpiar errores
+	function showError(field: string, msg: string) {
+		const errorEl = form.querySelector(`[data-error="${field}"]`) as HTMLElement;
+		const inputEl = form.querySelector(`[name="${field}"]`) as HTMLElement;
+		errorEl.textContent = msg;
+		inputEl.classList.add('is-invalid');
+	}
+
+	function clearError(field: string) {
+		const errorEl = form.querySelector(`[data-error="${field}"]`) as HTMLElement;
+		const inputEl = form.querySelector(`[name="${field}"]`) as HTMLElement;
+		errorEl.textContent = '';
+		inputEl.classList.remove('is-invalid');
+	}
+
+	// --- Confirmación: cambiar vista del modal ---
+	const confirmationEl = document.getElementById('orderConfirmation') as HTMLElement;
+	const confirmSummaryEl = document.getElementById('confirmSummary') as HTMLElement;
+	const newOrderBtn = document.getElementById('newOrderBtn') as HTMLElement;
+
+	function showConfirmation(deliveryFormatted: string) {
+		// Copiar resumen al panel de confirmación
+		let html = summaryEl.innerHTML;
+		html += `<div class="summary-delivery">Entrega estimada: ${deliveryFormatted}</div>`;
+		confirmSummaryEl.innerHTML = html;
+
+		// Ocultar formulario, mostrar confirmación
+		form.hidden = true;
+		summaryEl.parentElement!.querySelector('.modal__title')!.textContent = '';
+		summaryEl.hidden = true;
+		deliveryEl.hidden = true;
+		confirmationEl.hidden = false;
+	}
+
+	// Botón "Hacer otro pedido" — resetea todo
+	newOrderBtn.addEventListener('click', () => {
+		// Resetear formulario
+		form.reset();
+		form.hidden = false;
+		summaryEl.hidden = false;
+		deliveryEl.hidden = false;
+		confirmationEl.hidden = true;
+		(modal.querySelector('.modal__title') as HTMLElement).textContent = 'Tu Pedido';
+
+		// Resetear contadores de productos
+		document.querySelectorAll('.product-card').forEach(card => {
+			(card.querySelector('[data-qty]') as HTMLElement).textContent = '0';
+			(card.querySelector('[data-total]') as HTMLElement).textContent = '';
+		});
+
+		// Ocultar botón de continuar
+		checkoutBtn.setAttribute('hidden', '');
+
+		// Cerrar modal
+		closeModal();
+	});
+</script>

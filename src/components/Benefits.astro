@@ -1,0 +1,192 @@
+---
+// Sección de beneficios — 3 bloques con íconos SVG line-art
+// Entrega a domicilio, rapidez, calidad garantizada
+const benefits = [
+	{
+		title: 'Entrega a Domicilio',
+		description: 'Llevamos el agua hasta tu puerta en toda la ciudad de Durango. Sin costo extra de envío.',
+		icon: 'truck',
+	},
+	{
+		title: 'Entrega al Día Siguiente',
+		description: 'Haz tu pedido y recibelo,hasta la puerta de tu casa.',
+		icon: 'clock',
+	},
+	{
+		title: 'Calidad Garantizada',
+		description: 'Agua purificada con los más altos estándares. Proceso certificado para tu tranquilidad.',
+		icon: 'shield',
+	},
+];
+---
+
+<section class="benefits" id="beneficios">
+	<div class="benefits__container container">
+		<h2 class="benefits__heading section-heading">¿Por qué elegirnos?</h2>
+		<p class="section-subtitle">Más de 20,000 familias en Durango ya confían en nosotros</p>
+
+		<div class="benefits__grid">
+			{benefits.map((benefit) => (
+				<div class="benefits__card">
+					<div class="benefits__icon">
+						{benefit.icon === 'truck' && (
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d="M1 3h15v13H1z"/>
+								<path d="M16 8h4l3 3v5h-7V8z"/>
+								<circle cx="5.5" cy="18.5" r="2.5"/>
+								<circle cx="18.5" cy="18.5" r="2.5"/>
+							</svg>
+						)}
+						{benefit.icon === 'clock' && (
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<circle cx="12" cy="12" r="10"/>
+								<path d="M12 6v6l4 2"/>
+							</svg>
+						)}
+						{benefit.icon === 'shield' && (
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+								<path d="M9 12l2 2 4-4"/>
+							</svg>
+						)}
+					</div>
+					<h3 class="benefits__title">{benefit.title}</h3>
+					<p class="benefits__description">{benefit.description}</p>
+				</div>
+			))}
+		</div>
+	</div>
+
+	<!-- Wave decorativa superior -->
+	<div class="benefits__wave benefits__wave--top" aria-hidden="true">
+		<svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M0,50 Q360,0 720,40 Q1080,80 1440,30 L1440,80 L0,80 Z" fill="rgba(15,188,249,0.07)"/>
+			<path d="M0,60 Q360,20 720,50 Q1080,80 1440,40 L1440,80 L0,80 Z" fill="rgba(18,203,196,0.05)"/>
+		</svg>
+	</div>
+
+	<!-- Wave decorativa inferior -->
+	<div class="benefits__wave benefits__wave--bottom" aria-hidden="true">
+		<svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M0,30 Q360,80 720,40 Q1080,0 1440,50 L1440,0 L0,0 Z" fill="rgba(18,203,196,0.05)"/>
+			<path d="M0,40 Q360,80 720,50 Q1080,10 1440,60 L1440,0 L0,0 Z" fill="rgba(15,188,249,0.07)"/>
+		</svg>
+	</div>
+</section>
+
+<style>
+	.benefits {
+		position: relative;
+		padding-block: var(--space-3xl);
+		background-color: var(--color-bg);
+		overflow: hidden;
+	}
+
+	/* --- Waves decorativas --- */
+	.benefits__wave {
+		position: absolute;
+		left: 0;
+		width: 100%;
+		line-height: 0;
+		z-index: 0;
+	}
+
+	.benefits__wave--top {
+		top: 0;
+	}
+
+	.benefits__wave--bottom {
+		bottom: 0;
+	}
+
+	.benefits__wave svg {
+		display: block;
+		width: 100%;
+		height: 60px;
+	}
+
+	@media (min-width: 768px) {
+		.benefits__wave svg {
+			height: 80px;
+		}
+	}
+
+	.benefits__container {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	/* --- Grid de beneficios --- */
+	.benefits__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-xl);
+		width: 100%;
+		max-width: 900px;
+	}
+
+	/* --- Card individual --- */
+	.benefits__card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: var(--space-xl);
+		border-radius: var(--radius-lg);
+		background-color: var(--color-bg-light);
+		transition: box-shadow var(--transition-base), transform var(--transition-base);
+	}
+
+	.benefits__card:hover {
+		box-shadow: var(--shadow-md);
+		transform: translateY(-4px);
+	}
+
+	/* --- Ícono --- */
+	.benefits__icon {
+		width: 56px;
+		height: 56px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: var(--space-md);
+		background-color: var(--color-primary-dark);
+		border-radius: 50%;
+		padding: 12px;
+	}
+
+	.benefits__icon svg {
+		width: 100%;
+		height: 100%;
+		stroke: var(--color-secondary);
+	}
+
+	/* --- Texto --- */
+	.benefits__title {
+		font-size: var(--text-xl);
+		color: var(--color-primary-dark);
+		margin-bottom: var(--space-sm);
+	}
+
+	.benefits__description {
+		font-size: var(--text-base);
+		color: var(--color-text-light);
+		max-width: 300px;
+		margin-bottom: 0;
+	}
+
+	/* --- Tablet: 3 columnas --- */
+	@media (min-width: 768px) {
+		.benefits {
+			padding-block: var(--space-4xl);
+		}
+
+		.benefits__grid {
+			grid-template-columns: repeat(3, 1fr);
+			gap: var(--space-lg);
+		}
+	}
+</style>
