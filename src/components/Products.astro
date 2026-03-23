@@ -262,15 +262,14 @@ import { products } from '../data/products.js';
 </style>
 
 <script>
+	import { hasSelectedItems } from '../scripts/cart.js';
+
 	// Botón de continuar — se muestra cuando hay al menos 1 producto seleccionado
 	const checkoutBtn = document.getElementById('checkoutBtn') as HTMLElement;
 
 	// Función para verificar si hay productos seleccionados
 	function updateCheckoutBtn() {
-		const allQtys = document.querySelectorAll('[data-qty]');
-		const hasProducts = Array.from(allQtys).some(el => Number(el.textContent) > 0);
-
-		if (hasProducts) {
+		if (hasSelectedItems()) {
 			checkoutBtn.removeAttribute('hidden');
 		} else {
 			checkoutBtn.setAttribute('hidden', '');

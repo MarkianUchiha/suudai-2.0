@@ -366,6 +366,7 @@
 
 <script>
 	import { getDeliveryDate, formatDeliveryDate } from '../scripts/delivery-date.js';
+	import { buildSummaryHTML, buildWhatsAppMessage, resetAllItems } from '../scripts/cart.js';
 
 	// --- Modal: abrir/cerrar ---
 	const modal = document.getElementById('orderModal') as HTMLElement;
@@ -377,7 +378,7 @@
 	// Abrir modal
 	function openModal() {
 		// Generar resumen de productos seleccionados
-		buildSummary();
+		updateSummary();
 		// Calcular y mostrar fecha de entrega
 		const deliveryDate = getDeliveryDate();
 		const formatted = formatDeliveryDate(deliveryDate);
@@ -407,25 +408,9 @@
 		}
 	});
 
-	// --- Resumen de productos ---
-	function buildSummary() {
-		const cards = document.querySelectorAll('.product-card');
-		let html = '';
-		let total = 0;
-
-		cards.forEach(card => {
-			const qty = Number((card.querySelector('[data-qty]') as HTMLElement).textContent);
-			if (qty > 0) {
-				const name = (card.querySelector('.product-card__name') as HTMLElement).textContent;
-				const price = Number((card as HTMLElement).dataset.price);
-				const subtotal = qty * price;
-				total += subtotal;
-				html += `<div class="summary-item"><span>${qty}x ${name}</span><span>$${subtotal} MXN</span></div>`;
-			}
-		});
-
-		html += `<div class="summary-total"><span>Total</span><span>$${total} MXN</span></div>`;
-		summaryEl.innerHTML = html;
+	// --- Resumen de productos (usa módulo centralizado) ---
+	function updateSummary() {
+		summaryEl.innerHTML = buildSummaryHTML();
 	}
 
 	// --- Validación del formulario ---
@@ -466,32 +451,10 @@
 
 		if (!isValid) return;
 
-		// Construir mensaje de WhatsApp (ticket SUUDAI-204)
-		const cards = document.querySelectorAll('.product-card');
-		let message = `*Nuevo Pedido - Suudai*\n\n`;
-		message += `*Nombre:* ${name}\n`;
-		message += `*Telefono:* ${phone}\n`;
-		message += `*Direccion:* ${address}\n\n`;
-		message += `*Productos:*\n`;
-
-		let total = 0;
-		cards.forEach(card => {
-			const qty = Number((card.querySelector('[data-qty]') as HTMLElement).textContent);
-			if (qty > 0) {
-				const productName = (card.querySelector('.product-card__name') as HTMLElement).textContent;
-				const price = Number((card as HTMLElement).dataset.price);
-				const subtotal = qty * price;
-				total += subtotal;
-				message += `- ${qty}x ${productName} — $${subtotal} MXN\n`;
-			}
-		});
-
+		// Construir mensaje de WhatsApp
 		const deliveryDate = getDeliveryDate();
 		const formatted = formatDeliveryDate(deliveryDate);
-
-		message += `\n*Total: $${total} MXN*\n`;
-		message += `*Entrega estimada:* ${formatted}\n`;
-		message += `*Pago:* Cobro a la entrega`;
+		const message = buildWhatsAppMessage(name, phone, address, formatted);
 
 		// Abrir WhatsApp con mensaje
 		const waNumber = '526181063930';
@@ -547,10 +510,7 @@
 		(modal.querySelector('.modal__title') as HTMLElement).textContent = 'Tu Pedido';
 
 		// Resetear contadores de productos
-		document.querySelectorAll('.product-card').forEach(card => {
-			(card.querySelector('[data-qty]') as HTMLElement).textContent = '0';
-			(card.querySelector('[data-total]') as HTMLElement).textContent = '';
-		});
+		resetAllItems();
 
 		// Ocultar botón de continuar
 		checkoutBtn.setAttribute('hidden', '');
