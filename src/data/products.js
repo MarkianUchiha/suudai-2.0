@@ -25,7 +25,7 @@ export const products = [
 		id: 'paq-500ml',
 		name: 'Paquete 30 Botellas',
 		size: '500ml c/u',
-		price: 107,
+		price: 113,
 		image: '/images/paq_botella_500.png',
 	},
 	{
