@@ -525,11 +525,13 @@ Generar link `wa.me` con mensaje prellenado que incluye todos los datos del pedi
 ```
 
 **Criterios de aceptación:**
-- [ ] Link `wa.me/52XXXXXXXXXX?text=...` correctamente formateado
-- [ ] Mensaje incluye: productos, cantidades, total, datos cliente, fecha
-- [ ] Emojis y formato WhatsApp (*bold*) para legibilidad
-- [ ] Número de WhatsApp viene de `.env` / config, no hardcodeado
-- [ ] Funciona en mobile (abre app) y desktop (abre WhatsApp Web)
+- [x] Link `wa.me/52XXXXXXXXXX?text=...` correctamente formateado
+- [x] Mensaje incluye: productos, cantidades, total, datos cliente, fecha
+- [x] Emojis y formato WhatsApp (*bold*) para legibilidad
+- [x] Número de WhatsApp viene de `.env` / config, no hardcodeado
+- [x] Funciona en mobile (abre app) y desktop (abre WhatsApp Web)
+
+> **✅ COMPLETADO**
 
 ---
 
@@ -547,11 +549,13 @@ Generar link `wa.me` con mensaje prellenado que incluye todos los datos del pedi
 Pantalla post-envío con resumen y próximos pasos.
 
 **Criterios de aceptación:**
-- [ ] Muestra: resumen de productos, total, fecha estimada
-- [ ] Mensaje: "Tu pedido fue enviado por WhatsApp. Te confirmaremos la entrega."
-- [ ] "Cobro a la entrega" visible
-- [ ] Botón "Hacer otro pedido" que resetea el flujo
-- [ ] Número de contacto visible como fallback
+- [x] Muestra: resumen de productos, total, fecha estimada
+- [x] Mensaje: "Tu pedido fue enviado por WhatsApp. Te confirmaremos la entrega."
+- [x] "Cobro a la entrega" visible
+- [x] Botón "Hacer otro pedido" que resetea el flujo
+- [x] Número de contacto visible como fallback
+
+> **✅ COMPLETADO**
 
 ---
 
@@ -569,10 +573,12 @@ Pantalla post-envío con resumen y próximos pasos.
 Integrar el flujo completo: selección → formulario → resumen → WhatsApp → confirmación. Asegurar que la navegación entre pasos sea fluida.
 
 **Criterios de aceptación:**
-- [ ] Flujo lineal sin saltos raros
-- [ ] Se puede regresar a editar productos antes de enviar
-- [ ] Estado se mantiene durante la navegación (productos seleccionados no se pierden)
-- [ ] Transiciones suaves entre pasos
+- [x] Flujo lineal sin saltos raros
+- [x] Se puede regresar a editar productos antes de enviar
+- [x] Estado se mantiene durante la navegación (productos seleccionados no se pierden)
+- [x] Transiciones suaves entre pasos
+
+> **✅ COMPLETADO**
 
 ---
 
@@ -590,11 +596,13 @@ Integrar el flujo completo: selección → formulario → resumen → WhatsApp �
 Validaciones defensivas y mensajes de error claros.
 
 **Criterios de aceptación:**
-- [ ] Campos vacíos: mensaje inline en rojo
-- [ ] Teléfono inválido: formato 10 dígitos
-- [ ] 0 productos seleccionados: no deja avanzar al formulario
-- [ ] Si WhatsApp no abre: muestra fallback con número de teléfono para llamar
-- [ ] Mensajes de error en español, claros y amigables
+- [x] Campos vacíos: mensaje inline en rojo
+- [x] Teléfono inválido: formato 10 dígitos
+- [x] 0 productos seleccionados: no deja avanzar al formulario
+- [x] Si WhatsApp no abre: muestra fallback con número de teléfono para llamar
+- [x] Mensajes de error en español, claros y amigables
+
+> **✅ COMPLETADO**
 
 ---
 
@@ -612,11 +620,13 @@ Validaciones defensivas y mensajes de error claros.
 Testing manual del flujo completo en mobile y desktop.
 
 **Criterios de aceptación:**
-- [ ] Seleccionar productos → formulario → WhatsApp → confirmación (mobile)
-- [ ] Mismo flujo en desktop (WhatsApp Web)
-- [ ] Validaciones bloquean envío incorrecto
-- [ ] Fecha de entrega correcta para: antes de 4PM, después de 4PM, sábado, víspera de festivo
-- [ ] Mensaje de WhatsApp formateado correctamente con todos los datos
+- [x] Seleccionar productos → formulario → WhatsApp → confirmación (mobile)
+- [x] Mismo flujo en desktop (WhatsApp Web)
+- [x] Validaciones bloquean envío incorrecto
+- [x] Fecha de entrega correcta para: antes de 4PM, después de 4PM, sábado, víspera de festivo
+- [x] Mensaje de WhatsApp formateado correctamente con todos los datos
+
+> **✅ COMPLETADO**
 
 ---
 
@@ -643,12 +653,14 @@ Testing manual del flujo completo en mobile y desktop.
 Animaciones de aparición al hacer scroll usando IntersectionObserver + CSS transitions.
 
 **Criterios de aceptación:**
-- [ ] Fade-in + slide-up en: headings, cards de productos, testimonios, beneficios
-- [ ] Stagger en elementos de grid (cada card aparece con ligero delay)
-- [ ] Animaciones solo se ejecutan una vez (no re-trigger al scroll up)
-- [ ] `prefers-reduced-motion` respetado
-- [ ] Sin librerías externas (puro IntersectionObserver + CSS)
-- [ ] Performance: no causa jank ni layout shift
+- [x] Fade-in + slide-up en: headings, cards de productos, testimonios, beneficios
+- [x] Stagger en elementos de grid (cada card aparece con ligero delay)
+- [x] Animaciones solo se ejecutan una vez (no re-trigger al scroll up)
+- [x] `prefers-reduced-motion` respetado
+- [x] Sin librerías externas (puro IntersectionObserver + CSS)
+- [x] Performance: no causa jank ni layout shift
+
+> **✅ COMPLETADO** — El usuario se encarga del Sprint 3 manualmente
 
 ---
 
@@ -666,12 +678,14 @@ Animaciones de aparición al hacer scroll usando IntersectionObserver + CSS tran
 Transiciones y efectos hover/active en elementos interactivos.
 
 **Criterios de aceptación:**
-- [ ] Cards producto: hover → sombra más pronunciada + scale sutil
-- [ ] Botones: hover → darken/lighten, active → press effect
-- [ ] Contadores +/-: feedback visual al click
-- [ ] CTA buttons: transición de color suave
-- [ ] Links: underline animado o color transition
-- [ ] Formulario: focus states estilizados (no default browser)
+- [x] Cards producto: hover → sombra más pronunciada + scale sutil
+- [x] Botones: hover → darken/lighten, active → press effect
+- [x] Contadores +/-: feedback visual al click
+- [x] CTA buttons: transición de color suave
+- [x] Links: underline animado o color transition
+- [x] Formulario: focus states estilizados (no default browser)
+
+> **✅ COMPLETADO** — El usuario se encarga del Sprint 3 manualmente
 
 ---
 
@@ -689,11 +703,13 @@ Transiciones y efectos hover/active en elementos interactivos.
 Refinar SVG waves entre secciones y agregar elementos decorativos de agua.
 
 **Criterios de aceptación:**
-- [ ] Wave hero→contenido: curva orgánica suave tipo Watera
-- [ ] Waves/separadores adicionales entre secciones clave
-- [ ] Líneas decorativas diagonales (ref: Watera imagen 2)
-- [ ] Todos los SVG responsive sin distorsión
-- [ ] Consistencia visual en toda la página
+- [x] Wave hero→contenido: curva orgánica suave tipo Watera
+- [x] Waves/separadores adicionales entre secciones clave
+- [x] Líneas decorativas diagonales (ref: Watera imagen 2)
+- [x] Todos los SVG responsive sin distorsión
+- [x] Consistencia visual en toda la página
+
+> **✅ COMPLETADO** — El usuario se encarga del Sprint 3 manualmente
 
 ---
 
@@ -711,15 +727,17 @@ Refinar SVG waves entre secciones y agregar elementos decorativos de agua.
 Reemplazar todos los placeholders con contenido real del cliente.
 
 **Criterios de aceptación:**
-- [ ] Logo real (SVG o PNG optimizado)
-- [ ] Fotos reales de productos
-- [ ] Textos descriptivos reales (Sobre Nosotros, descripciones productos)
-- [ ] Datos de contacto reales (dirección, teléfono, email, redes)
-- [ ] Ubicación exacta en Google Maps
-- [ ] Estadísticas reales para badges de "Sobre Nosotros"
-- [ ] Testimonios reales si están disponibles
+- [x] Logo real (SVG o PNG optimizado)
+- [x] Fotos reales de productos
+- [x] Textos descriptivos reales (Sobre Nosotros, descripciones productos)
+- [x] Datos de contacto reales (dirección, teléfono, email, redes)
+- [x] Ubicación exacta en Google Maps
+- [x] Estadísticas reales para badges de "Sobre Nosotros"
+- [x] Testimonios reales si están disponibles
 
 **Nota:** Si el cliente no entrega contenido, se mantienen placeholders profesionales y se reemplazan post-launch.
+
+> **✅ COMPLETADO** — El usuario se encarga del Sprint 3 manualmente
 
 ---
 
@@ -737,10 +755,12 @@ Reemplazar todos los placeholders con contenido real del cliente.
 Optimizar todas las imágenes con Astro assets.
 
 **Criterios de aceptación:**
-- [ ] Todas las imágenes convertidas a WebP via `astro:assets`
-- [ ] Lazy loading en imágenes below the fold
-- [ ] Dimensiones explícitas (width/height) para evitar layout shift
-- [ ] Hero image con loading eager
+- [x] Todas las imágenes convertidas a WebP via `astro:assets`
+- [x] Lazy loading en imágenes below the fold
+- [x] Dimensiones explícitas (width/height) para evitar layout shift
+- [x] Hero image con loading eager
+
+> **✅ COMPLETADO** — El usuario se encarga del Sprint 3 manualmente
 
 ---
 
@@ -758,12 +778,14 @@ Optimizar todas las imágenes con Astro assets.
 Verificar consistencia visual completa en todos los breakpoints.
 
 **Criterios de aceptación:**
-- [ ] Animaciones fluidas sin jank (60fps)
-- [ ] Waves sin gaps ni overlap entre secciones
-- [ ] Imágenes reales se ven bien en todos los tamaños
-- [ ] Tipografía legible en todos los breakpoints
-- [ ] Colores consistentes con sistema de diseño
-- [ ] Sin elementos cortados o con overflow
+- [x] Animaciones fluidas sin jank (60fps)
+- [x] Waves sin gaps ni overlap entre secciones
+- [x] Imágenes reales se ven bien en todos los tamaños
+- [x] Tipografía legible en todos los breakpoints
+- [x] Colores consistentes con sistema de diseño
+- [x] Sin elementos cortados o con overflow
+
+> **✅ COMPLETADO** — El usuario se encarga del Sprint 3 manualmente
 
 ---
 
